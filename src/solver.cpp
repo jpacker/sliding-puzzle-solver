@@ -87,9 +87,10 @@ bool solver::IsSolvable(Puzzle const& puzzle)
 	// (for odd puzzle size) then it is solvable
 	// An inversion is a pair of tiles (a,b) such that a appears before
 	// b and a > b.
-	static_assert(puzzle.size() % 2 == 1, "expect odd puzzle size");
-	std::array<unsigned, puzzle.size()> inversions;
-	for(unsigned i = 0; i < puzzle.size() - 1; ++i)
+    constexpr auto puzzleSize = std::tuple_size<Puzzle>::value;
+	static_assert(puzzleSize % 2 == 1, "expect odd puzzle size");
+	std::array<unsigned, puzzleSize> inversions;
+	for(unsigned i = 0; i < puzzleSize - 1; ++i)
 	{
 		const auto current = puzzle[i];
 		inversions[i] = count_if(begin(puzzle) + i + 1,
